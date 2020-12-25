@@ -1,0 +1,81 @@
+syntax="proto3";
+
+import "model.proto";
+import "google/protobuf/empty.proto";
+
+option go_package= ".;pb";
+
+service MemberService{
+    //註冊
+    rpc Registey(RegisteyReq)returns (google.protobuf.Empty);
+    //建立帳戶
+    rpc Create(CreateReq)returns(google.protobuf.Empty);
+    //刪除帳戶
+    rpc Delete(DeleteReq)returns(google.protobuf.Empty);
+    //修改帳戶
+    rpc Modity(ModityReq)returns(google.protobuf.Empty);
+    //登入
+    rpc Login(LoginReq)returns(LoginResp);
+    //獲取用戶清單
+    rpc MemberList(MemberListReq)returns(MemberListResp);
+    //查詢用戶內容
+    rpc MemberInfo(MemberInfoReq)returns(MemberInfoResp);
+}
+
+
+message RegisteyReq{
+    Version version = 1;
+    Member m_info = 2;
+}
+
+message CreateReq{
+    Version version = 1;
+    string code =2;
+}
+message DeleteReq{
+    Version version = 1;
+    int64 m_id = 2;
+}
+
+message ModityReq{
+    Version version = 1;
+    int64 m_id = 2;
+    Member m_info = 3;
+}
+
+message LoginReq{
+    Version version = 1;
+     string m_name = 2;
+     string password = 3;
+}
+
+message LoginResp{
+    string token = 1;
+}
+
+message MemberInfoReq{
+    Version version = 1;
+    string m_name = 3;
+}
+
+message MemberInfoResp{
+    string m_name = 1;
+    bool is_seller = 2;
+    double balanc = 3;
+}
+message MemberListReq{
+    Version version = 1;
+    message Category{
+       int32 offset = 1;
+       bool is_seller = 2;
+    }
+    Category category =2;
+}
+message MemberListResp{
+    message MemberList{
+        string m_name = 1;
+        bool is_seller = 2;
+        double balanc = 3;
+    }  ;
+    repeated MemberList m_list= 1;
+}
