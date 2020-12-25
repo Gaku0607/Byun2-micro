@@ -1,0 +1,13 @@
+syntax="proto3";
+
+option go_package= ".;pb";
+
+message Member{
+    string name = 2;
+    string password = 3;
+    string email = 4;
+}
+
+message Version{
+    string api_version = 1;
+}
